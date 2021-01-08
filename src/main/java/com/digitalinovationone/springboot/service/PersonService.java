@@ -1,5 +1,8 @@
 package com.digitalinovationone.springboot.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,5 +36,10 @@ public class PersonService {
 		Person savedPerson = personRepository.save(personToSave);
 		
 		return MessageResponseDTO.builder().message("Created person with ID " + savedPerson.getId()).build();
+	}
+
+	public List<PersonDTO> listAll() {
+		List<Person> allPerson = personRepository.findAll();
+		return allPerson.stream().map(personMapper::toDTO).collect(Collectors.toList());
 	}
 }
