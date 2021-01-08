@@ -1,13 +1,15 @@
 package com.digitalinovationone.springboot.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.digitalinovationone.springboot.dto.MessageResponseDTO;
-import com.digitalinovationone.springboot.entity.Person;
+import com.digitalinovationone.springboot.dto.request.PersonDTO;
+import com.digitalinovationone.springboot.dto.response.MessageResponseDTO;
 import com.digitalinovationone.springboot.service.PersonService;
 
 @RestController
@@ -22,7 +24,7 @@ public class PersonController {
 	}
 
 	@PostMapping
-	public MessageResponseDTO createPerson(@RequestBody Person person) {
-		return personService.createPerson(person);
+	public MessageResponseDTO createPerson(@RequestBody @Valid PersonDTO personDTO) {
+		return personService.createPerson(personDTO);
 	}
 }
