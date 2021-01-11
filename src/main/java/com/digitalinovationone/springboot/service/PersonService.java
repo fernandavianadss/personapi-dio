@@ -18,17 +18,16 @@ import com.digitalinovationone.springboot.exception.PersonNotFoundException;
 import com.digitalinovationone.springboot.mapper.PersonMapper;
 import com.digitalinovationone.springboot.repository.PersonRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
 	private PersonRepository personRepository;
 	
 	private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
-	@Autowired
-	public PersonService(PersonRepository personRepository) {
-		this.personRepository = personRepository;
-	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
