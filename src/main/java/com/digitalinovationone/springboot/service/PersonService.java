@@ -1,6 +1,7 @@
 package com.digitalinovationone.springboot.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.digitalinovationone.springboot.dto.request.PersonDTO;
 import com.digitalinovationone.springboot.dto.response.MessageResponseDTO;
 import com.digitalinovationone.springboot.entity.Person;
+import com.digitalinovationone.springboot.exception.PersonNotFoundException;
 import com.digitalinovationone.springboot.mapper.PersonMapper;
 import com.digitalinovationone.springboot.repository.PersonRepository;
 
@@ -41,5 +43,12 @@ public class PersonService {
 	public List<PersonDTO> listAll() {
 		List<Person> allPerson = personRepository.findAll();
 		return allPerson.stream().map(personMapper::toDTO).collect(Collectors.toList());
+	}
+
+	public PersonDTO findById(Long id) throws PersonNotFoundException {
+		
+		Person person = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+		
+		return personMapper.toDTO(person);
 	}
 }
